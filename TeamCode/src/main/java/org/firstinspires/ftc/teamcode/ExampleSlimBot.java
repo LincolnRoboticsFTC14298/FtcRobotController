@@ -8,13 +8,13 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.subsytems.ExampleIntakeSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.ExampleIntakeSubsystem;
 
 public class ExampleSlimBot extends Robot {
 
     public ExampleIntakeSubsystem intake;
 
-    private GamepadEx gamepad;
+    private final GamepadEx gamepad;
 
     public ExampleSlimBot(HardwareMap hardwareMap, Gamepad gamepad1) {
         intake = new ExampleIntakeSubsystem(hardwareMap);
