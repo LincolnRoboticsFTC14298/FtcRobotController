@@ -10,7 +10,7 @@ import com.arcrobotics.ftclib.command.SubsystemBase;
 public class ElevatorSubsystem extends SubsystemBase {
 
     /**
-     *
+     * Predefined height levels for the elevator.
      */
     public enum Height {
         BOTTOM(0),
@@ -54,6 +54,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     /**
      * Lifts elevator to preset heights.
      * @param height Preset height values.
+     * @see Height
      */
     public void lift(Height height) {
         lift(height.getHeight());

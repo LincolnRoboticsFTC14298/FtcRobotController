@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 
 /**
- * I want the code to turn on and turn off the intake as well as extend the intake and allow
+ * The intake should be able to extend the intake and allow
  * a joystick to change the distance the intake extends.
  * @author Alex
  */
@@ -36,6 +36,5 @@ public class IntakeSubsystem extends SubsystemBase {
     public void   extendJoystick(double x) {
 
     }
-
 
 }
