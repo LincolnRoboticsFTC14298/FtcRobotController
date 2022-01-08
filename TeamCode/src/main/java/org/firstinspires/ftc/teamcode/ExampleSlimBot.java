@@ -8,16 +8,20 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.subsytems.ExampleIntakeSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.DuckWheelSubsystem;
+
 
 public class ExampleSlimBot extends Robot {
 
-    public ExampleIntakeSubsystem intake;
+    // public ExampleIntakeSubsystem intakeSubsystem;
 
+    public DuckWheelSubsystem duckWheelSubsystem;
     private GamepadEx gamepad;
 
     public ExampleSlimBot(HardwareMap hardwareMap, Gamepad gamepad1) {
-        intake = new ExampleIntakeSubsystem(hardwareMap);
+        // intakeSubsystem = new ExampleIntakeSubsystem(hardwareMap);
+        duckWheelSubsystem = new DuckWheelSubsystem(hardwareMap);
+
 
         gamepad = new GamepadEx(gamepad1);
 
@@ -25,11 +29,18 @@ public class ExampleSlimBot extends Robot {
     }
 
     public void initialize() {
-        gamepad.getGamepadButton(GamepadKeys.Button.B)
-                .whenPressed(new ConditionalCommand(
-                        new InstantCommand(intake::turnOn, intake),
-                        new InstantCommand(intake::turnOff, intake),
-                        () -> !intake.isActive()
-                ));
+//        gamepad.getGamepadButton(GamepadKeys.Button.B)
+//                .whenPressed(new ConditionalCommand(
+//                        new InstantCommand(intake::turnOn, intake),
+//                        new InstantCommand(intake::turnOff, intake),
+//                        () -> !intake.isActive()
+//                ));
+
+        gamepad.getGamepadButton(GamepadKeys.Button.A)
+                .whenPressed(new InstantCommand(duckWheelSubsystem::turnOn, duckWheelSubsystem))
+                .whenReleased(new InstantCommand(duckWheelSubsystem::turnOff, duckWheelSubsystem));
+
+
+
     }
 }
