@@ -23,6 +23,7 @@ public class ElevatorSubsystem extends SubsystemBase {
      */
     public enum Height {
         BOTTOM(0),
+        LOW(0),
         MIDDLE(0),
         TOP(0);
 
@@ -43,12 +44,15 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     private static double MIN_ANGLE = 0;
     private static double MAX_ANGLE = 90;
+    private static double HALF_ANGLE = 45;
 
     public static double kG = 0.1;
 
     public static double distancePerPulse = 0.015;
 
     public static double positionTolerance = 1.0;
+
+    public static double dumpAtPercentHeight = 80;
 
     public static SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(0, 0, 0);
     public static PIDFController pidf = new PIDFController(0, 0, 0, 0);
@@ -67,6 +71,13 @@ public class ElevatorSubsystem extends SubsystemBase {
       */
     public void dump() {
         dumperServo.setPosition(MAX_ANGLE);
+    }
+
+    /**
+     * Moves servo to a "half dump" position.
+     */
+    public void halfDump() {
+        dumperServo.setPosition(HALF_ANGLE);
     }
 
     /**
