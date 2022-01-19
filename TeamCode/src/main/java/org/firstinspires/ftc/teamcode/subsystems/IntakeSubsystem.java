@@ -65,5 +65,8 @@ public class IntakeSubsystem extends SubsystemBase {
      * intake distance command, joystick distance command.
      */
 
+    public void stopMotor(){
+        liftMotor.set(0);
+    }
 
 }
