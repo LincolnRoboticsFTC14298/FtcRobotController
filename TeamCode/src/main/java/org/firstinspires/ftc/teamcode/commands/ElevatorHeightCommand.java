@@ -25,7 +25,7 @@ public class ElevatorHeightCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return m_elevatorSubsystem.atTarget();
+        return m_elevatorSubsystem.atPosition();
     }
 
 }
