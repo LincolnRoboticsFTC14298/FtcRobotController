@@ -25,6 +25,4 @@ public class DumpAndRetractCommand extends SequentialCommandGroup {
         addRequirements(subsystem);
     }
 
-
-
 }

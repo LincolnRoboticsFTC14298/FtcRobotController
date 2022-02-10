@@ -52,17 +52,14 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public static double positionTolerance = 1.0;
 
-    public static double dumpAtPercentHeight = 80;
-
-    public static SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(0, 0, 0);
-    public static PIDFController pidf = new PIDFController(0, 0, 0, 0);
+    public static SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(0,0,0);
+    public static PIDFController pidf = new PIDFController(0,0,0,0);
 
     public ElevatorSubsystem(HardwareMap hardwareMap) {
         dumperServo = new SimpleServo(hardwareMap,"servo",MIN_ANGLE,MAX_ANGLE) {
         };
         liftMotor = new MotorEx(hardwareMap, "lift");
         liftMotor.setDistancePerPulse(distancePerPulse);
-
         liftMotor.setPositionTolerance(positionTolerance);
     }
 
@@ -89,7 +86,7 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     /**
      * Lifts elevator to preset heights.
-     * @param height Height in inches
+     * @param height Height in ticks.
      */
     public void lift(double height) {
         double currentDistance = liftMotor.getCurrentPosition();
@@ -108,6 +105,10 @@ public class ElevatorSubsystem extends SubsystemBase {
         lift(height.getHeight());
     }
 
+    /**
+     * Lifts elevator from joystick input
+     * @param y Joystick Y input.
+     */
     public void liftJoystick(double y) {
         double output = feedforward.calculate(y, 0) + kG;
         liftMotor.set(output);
@@ -125,6 +126,13 @@ public class ElevatorSubsystem extends SubsystemBase {
      */
     public boolean atPosition() {
         return pidf.atSetPoint();
+    }
+
+    /**
+     * Returns the Lift Motor's ticks.
+     */
+    public double getTicks() {
+        return 0;
     }
 
 }
