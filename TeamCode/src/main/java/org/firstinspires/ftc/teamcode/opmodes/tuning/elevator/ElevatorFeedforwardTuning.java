@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes.tuning.elevator;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 
-import org.firstinspires.ftc.teamcode.commands.ElevatorJoystickCommand;
+import org.firstinspires.ftc.teamcode.commands.elevator.ElevatorJoystickCommand;
 import org.firstinspires.ftc.teamcode.subsystems.ElevatorSubsystem;
 
 public class ElevatorFeedforwardTuning extends CommandOpMode {
