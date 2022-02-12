@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import android.util.Log;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDFController;
 import com.arcrobotics.ftclib.controller.wpilibcontroller.SimpleMotorFeedforward;
@@ -8,7 +9,7 @@ import com.arcrobotics.ftclib.hardware.SimpleServo;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Range;
 
 /**
  * This subsystem controls the elevator and dump.
@@ -16,7 +17,6 @@ import com.qualcomm.robotcore.hardware.Servo;
  **/
 
 public class ElevatorSubsystem extends SubsystemBase {
-
 
     /**
      * Predefined height levels for the elevator.
@@ -43,8 +43,11 @@ public class ElevatorSubsystem extends SubsystemBase {
     private Motor liftMotor;
 
     private static double MIN_ANGLE = 0;
-    private static double MAX_ANGLE = 90;
     private static double HALF_ANGLE = 45;
+    private static double MAX_ANGLE = 90;
+
+    private static double MIN_HEIGHT = 0;
+    private static double MAX_HEIGHT = 0;
 
     public static double kG = 0.1;
 
@@ -67,6 +70,7 @@ public class ElevatorSubsystem extends SubsystemBase {
      * Dumps elements from container.
       */
     public void dump() {
+        Log.v("ElevatorSubsystem","Dumping");
         dumperServo.setPosition(MAX_ANGLE);
     }
 
@@ -74,6 +78,7 @@ public class ElevatorSubsystem extends SubsystemBase {
      * Moves servo to a "half dump" position.
      */
     public void halfDump() {
+        Log.v("ElevatorSubsystem","Half-dumping");
         dumperServo.setPosition(HALF_ANGLE);
     }
 
@@ -81,17 +86,20 @@ public class ElevatorSubsystem extends SubsystemBase {
      * Retracts dumper servo.
      */
     public void retract() {
+        Log.v("ElevatorSubsystem","Retracting dumper");
         dumperServo.setPosition(MIN_ANGLE);
     }
 
     /**
-     * Lifts elevator to preset heights.
+     * Lifts elevator to a height.
      * @param height Height in ticks.
      */
     public void lift(double height) {
+        Log.v("ElevatorSubsystem","Lifting elevator to " + height);
+
         double currentDistance = liftMotor.getCurrentPosition();
         double output = pidf.calculate(
-                currentDistance, height
+                currentDistance, Range.clip(height,MIN_HEIGHT,MAX_HEIGHT)
         ) + kG;
         liftMotor.set(output);
     }
@@ -118,6 +126,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     *Sets lift to default power (gravity)
      */
     public void defaultPower() {
+        Log.v("ElevatorSubsystem","Setting elevator to default power");
         liftMotor.set(kG);
     }
 

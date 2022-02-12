@@ -18,7 +18,7 @@ public class WaitCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return time <= timer.seconds();
+        return timer.seconds() >= time;
     }
 
 }

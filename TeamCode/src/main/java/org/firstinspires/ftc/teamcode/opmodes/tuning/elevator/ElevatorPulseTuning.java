@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmodes.tuning;
+package org.firstinspires.ftc.teamcode.opmodes.tuning.elevator;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 
 import org.firstinspires.ftc.teamcode.commands.ElevatorHeightCommand;
