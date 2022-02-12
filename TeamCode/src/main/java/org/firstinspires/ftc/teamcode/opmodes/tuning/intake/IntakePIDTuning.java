@@ -1,41 +1,40 @@
-package org.firstinspires.ftc.teamcode.opmodes.tuning.elevator;
+package org.firstinspires.ftc.teamcode.opmodes.tuning.intake;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.teamcode.subsystems.ElevatorSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
 
 @TeleOp
 @Disabled
-public class ElevatorPIDTuning extends CommandOpMode {
+public class IntakePIDTuning extends CommandOpMode {
 
-    private ElevatorSubsystem subsystem;
+    private IntakeSubsystem subsystem;
     public static double period;
-    public static ElevatorSubsystem.Height height1;
-    public static ElevatorSubsystem.Height height2;
+    public static double length1;
+    public static double length2;
 
     @Override
     public void initialize() {
-        subsystem = new ElevatorSubsystem(hardwareMap);
-        subsystem.setDefaultCommand(new FlipFlopCommand(subsystem,period,height1,height2));
+        subsystem = new IntakeSubsystem(hardwareMap);
+        subsystem.setDefaultCommand(new FlipFlopCommand(subsystem,period, length1, length2));
     }
 
     private class FlipFlopCommand extends CommandBase {
 
-        private final ElevatorSubsystem m_subsystem;
+        private final IntakeSubsystem m_subsystem;
         private double period;
         private ElapsedTime elapsedTime;
-        private ElevatorSubsystem.Height height1;
-        private ElevatorSubsystem.Height height2;
+        private double length1;
+        private double length2;
 
-        public FlipFlopCommand(ElevatorSubsystem subsystem, double period, ElevatorSubsystem.Height height1, ElevatorSubsystem.Height height2) {
+        public FlipFlopCommand(IntakeSubsystem subsystem, double period, double length1, double length2) {
            m_subsystem = subsystem;
            this.period = period;
-           this.height1 = height1;
-           this.height2 = height2;
+           this.length1 = length1;
+           this.length2 = length2;
         }
 
         @Override
@@ -46,9 +45,9 @@ public class ElevatorPIDTuning extends CommandOpMode {
         @Override
         public void execute() {
             if (elapsedTime.seconds() < period) {
-                subsystem.lift(height1);
+                subsystem.extendToDistance(length1);
             } else {
-                subsystem.lift(height2);
+                subsystem.extendToDistance(length2);
             }
             if (elapsedTime.seconds() > 2 * period) {
                 elapsedTime.reset();
