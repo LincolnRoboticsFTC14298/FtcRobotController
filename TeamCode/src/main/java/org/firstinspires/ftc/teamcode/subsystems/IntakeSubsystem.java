@@ -19,6 +19,7 @@ public class IntakeSubsystem extends SubsystemBase {
     private Motor liftMotor;
 
     public static double intakePowerOn = 0.6;
+    public static double positionTolerance = 1.0;
 
     public static SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(0, 0, 0);
     public static PIDFController pidf = new PIDFController(0, 0, 0, 0);
@@ -27,6 +28,7 @@ public class IntakeSubsystem extends SubsystemBase {
         intakeMotor = new MotorEx(hardwareMap, "intake");
         liftMotor = new MotorEx(hardwareMap, "lift");
         liftMotor.setDistancePerPulse(0.015);
+        liftMotor.setPositionTolerance(positionTolerance);
     }
     /**
      * Turning on the intake.
@@ -67,6 +69,9 @@ public class IntakeSubsystem extends SubsystemBase {
 
     public void stopMotor(){
         liftMotor.set(0);
+    }
+    public boolean atPosition(){
+        return pidf.atSetPoint();
     }
 
 }
