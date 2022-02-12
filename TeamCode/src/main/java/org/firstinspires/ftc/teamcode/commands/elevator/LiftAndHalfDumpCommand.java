@@ -11,7 +11,6 @@ public class LiftAndHalfDumpCommand extends ParallelCommandGroup {
         addCommands(
           new ElevatorHeightCommand(height,subsystem),
           new InstantCommand(subsystem::halfDump, subsystem)
-
         );
 
         addRequirements(subsystem);
