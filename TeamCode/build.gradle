@@ -29,6 +29,8 @@ dependencies {
 
     implementation 'org.ftclib.ftclib:core:1.2.0'
 
+    implementation 'org.ftclib.ftclib:vision:1.2.0'
+
     implementation 'org.apache.commons:commons-math3:3.6.1'
 
     implementation 'com.acmerobotics.roadrunner:core:0.5.4'
