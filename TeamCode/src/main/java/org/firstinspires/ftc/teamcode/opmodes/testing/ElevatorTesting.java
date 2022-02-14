@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.commands.WaitCommand;
-import org.firstinspires.ftc.teamcode.commands.elevator.DumpAndRetractCommand;
+import org.firstinspires.ftc.teamcode.commands.elevator.RetractCommand;
 import org.firstinspires.ftc.teamcode.commands.elevator.ElevatorHeightCommand;
 import org.firstinspires.ftc.teamcode.commands.elevator.LiftAndHalfDumpCommand;
 import org.firstinspires.ftc.teamcode.subsystems.ElevatorSubsystem;
@@ -28,7 +28,7 @@ public class ElevatorTesting extends CommandOpMode {
                 new ElevatorHeightCommand(ElevatorSubsystem.Height.BOTTOM,subsystem),
                 new WaitCommand(1),
                 new LiftAndHalfDumpCommand(subsystem,ElevatorSubsystem.Height.TOP),
-                new DumpAndRetractCommand(subsystem)
+                new RetractCommand(subsystem)
         );
     }
 }
