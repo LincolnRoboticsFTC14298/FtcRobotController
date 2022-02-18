@@ -1,28 +1,34 @@
 package org.firstinspires.ftc.teamcode.opmodes.testing;
 
-import com.arcrobotics.ftclib.command.CommandOpMode;
+import com.qualcomm.hardware.rev.RevTouchSensor;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
-public class TouchSensorTesting extends CommandOpMode {
+@Disabled
+@TeleOp
+public class TouchSensorTesting extends LinearOpMode {
 
-    DigitalChannel digitalTouch;  // Hardware Device Object
+    RevTouchSensor digitalTouch;  // Hardware Device Object
 
-    public void initialize() {
+
+    public void runOpMode() {
 
         // get a reference to our digitalTouch object.
-        digitalTouch = hardwareMap.get(DigitalChannel.class, "sensor_digital");
+        digitalTouch = hardwareMap.get(RevTouchSensor.class, "sensor_digital");
 
-        // set the digital channel to input.
-        digitalTouch.setMode(DigitalChannel.Mode.INPUT);
+        waitForStart();
 
         while (opModeIsActive()) {
 
             // send the info back to driver station using telemetry function.
             // if the digital channel returns true it's HIGH and the button is unpressed.
-            if (digitalTouch.getState() == true) {
-                telemetry.addData("Digital Touch", "Is Not Pressed");
-            } else {
+            if (digitalTouch.isPressed()) {
                 telemetry.addData("Digital Touch", "Is Pressed");
+            } else {
+                telemetry.addData("Digital Touch", "Is Not Pressed");
             }
 
             telemetry.update();

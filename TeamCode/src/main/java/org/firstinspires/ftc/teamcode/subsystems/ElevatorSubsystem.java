@@ -8,6 +8,7 @@ import com.arcrobotics.ftclib.hardware.ServoEx;
 import com.arcrobotics.ftclib.hardware.SimpleServo;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
+import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
 
@@ -42,6 +43,12 @@ public class ElevatorSubsystem extends SubsystemBase {
     private ServoEx dumperServo;
     private Motor liftMotor;
 
+    /**
+     *TODO: Implement safety button
+     * @see org.firstinspires.ftc.teamcode.opmodes.testing.TouchSensorTesting
+     */
+    private RevTouchSensor digitalTouch; //Button for checking if lift is about to collide with something.
+
     private static double MIN_ANGLE = 0;
     private static double HALF_ANGLE = 45;
     private static double MAX_ANGLE = 90;
@@ -59,6 +66,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     public static PIDFController pidf = new PIDFController(0,0,0,0);
 
     public ElevatorSubsystem(HardwareMap hardwareMap) {
+        setName("Elevator");
         dumperServo = new SimpleServo(hardwareMap,"servo",MIN_ANGLE,MAX_ANGLE) {
         };
         liftMotor = new MotorEx(hardwareMap, "lift");
@@ -70,7 +78,7 @@ public class ElevatorSubsystem extends SubsystemBase {
      * Dumps elements from container.
       */
     public void dump() {
-        Log.v("ElevatorSubsystem","Dumping");
+        Log.v(getName(),"Dumping");
         dumperServo.setPosition(MAX_ANGLE);
     }
 
@@ -78,7 +86,7 @@ public class ElevatorSubsystem extends SubsystemBase {
      * Moves servo to a "half dump" position.
      */
     public void halfDump() {
-        Log.v("ElevatorSubsystem","Half-dumping");
+        Log.v(getName(),"Half-dumping");
         dumperServo.setPosition(HALF_ANGLE);
     }
 
@@ -86,7 +94,7 @@ public class ElevatorSubsystem extends SubsystemBase {
      * Retracts dumper servo.
      */
     public void retract() {
-        Log.v("ElevatorSubsystem","Retracting dumper");
+        Log.v(getName(),"Retracting dumper");
         dumperServo.setPosition(MIN_ANGLE);
     }
 
@@ -95,7 +103,7 @@ public class ElevatorSubsystem extends SubsystemBase {
      * @param height Height in ticks.
      */
     public void lift(double height) {
-        Log.v("ElevatorSubsystem","Lifting elevator to " + height);
+        Log.v(getName(),"Lifting elevator to " + height);
 
         double currentDistance = liftMotor.getCurrentPosition();
         double output = pidf.calculate(
@@ -126,7 +134,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     *Sets lift to default power (gravity)
      */
     public void defaultPower() {
-        Log.v("ElevatorSubsystem","Setting elevator to default power");
+        Log.v(getName(),"Setting elevator to default power");
         liftMotor.set(kG);
     }
 
