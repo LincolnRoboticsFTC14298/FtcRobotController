@@ -43,11 +43,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     private ServoEx dumperServo;
     private Motor liftMotor;
 
-    /**
-     *TODO: Implement safety button
-     * @see org.firstinspires.ftc.teamcode.opmodes.testing.TouchSensorTesting
-     */
-    private RevTouchSensor digitalTouch; //Button for checking if lift is about to collide with something.
+    private RevTouchSensor safetyButton;
 
     private static double MIN_ANGLE = 0;
     private static double HALF_ANGLE = 45;
@@ -72,6 +68,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         liftMotor = new MotorEx(hardwareMap, "lift");
         liftMotor.setDistancePerPulse(distancePerPulse);
         liftMotor.setPositionTolerance(positionTolerance);
+        safetyButton = hardwareMap.get(RevTouchSensor.class, "sensor_lift");
     }
 
     /**
@@ -99,17 +96,25 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
 
     /**
+     * Checks if safety switch is pressed.
+     */
+    public void checkButton() {
+        if (safetyButton.isPressed()) {
+            liftMotor.set(kG - 0.05);
+        }
+    }
+
+    /**
      * Lifts elevator to a height.
      * @param height Height in ticks.
      */
     public void lift(double height) {
         Log.v(getName(),"Lifting elevator to " + height);
-
-        double currentDistance = liftMotor.getCurrentPosition();
         double output = pidf.calculate(
-                currentDistance, Range.clip(height,MIN_HEIGHT,MAX_HEIGHT)
+                liftMotor.getDistance(), Range.clip(height,MIN_HEIGHT,MAX_HEIGHT)
         ) + kG;
         liftMotor.set(output);
+        checkButton();
     }
 
     /**
@@ -126,8 +131,13 @@ public class ElevatorSubsystem extends SubsystemBase {
      * @param y Joystick Y input.
      */
     public void liftJoystick(double y) {
-        double output = feedforward.calculate(y, 0) + kG;
-        liftMotor.set(output);
+        if (liftMotor.getDistance() >= MAX_HEIGHT && y >= 0) {
+            liftMotor.set(0);
+        } else {
+            double output = feedforward.calculate(y, 0) + kG;
+            liftMotor.set(output);
+            checkButton();
+        }
     }
 
     /**
@@ -143,13 +153,6 @@ public class ElevatorSubsystem extends SubsystemBase {
      */
     public boolean atPosition() {
         return pidf.atSetPoint();
-    }
-
-    /**
-     * Returns the Lift Motor's ticks.
-     */
-    public double getTicks() {
-        return 0;
     }
 
 }
