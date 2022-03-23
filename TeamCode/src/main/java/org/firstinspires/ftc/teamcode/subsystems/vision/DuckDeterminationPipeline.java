@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.vision;
+package org.firstinspires.ftc.teamcode.subsystems.vision;
 
 import android.util.Log;
 
@@ -240,7 +240,7 @@ public class DuckDeterminationPipeline extends OpenCvPipeline
         }
         else if(max == avg2) // Was it from region 2?
         {
-            position = Vision.DuckDeterminationPipeline.DuckPosition.CENTER; // Record our analysis
+            position = DuckDeterminationPipeline.DuckPosition.CENTER; // Record our analysis
 
             /*
              * Draw a solid rectangle on top of the chosen region.
@@ -255,7 +255,7 @@ public class DuckDeterminationPipeline extends OpenCvPipeline
         }
         else if(max == avg3) // Was it from region 3?
         {
-            position = Vision.DuckDeterminationPipeline.DuckPosition.RIGHT; // Record our analysis
+            position = DuckDeterminationPipeline.DuckPosition.RIGHT; // Record our analysis
 
             /*
              * Draw a solid rectangle on top of the chosen region.
@@ -280,7 +280,7 @@ public class DuckDeterminationPipeline extends OpenCvPipeline
     /*
      * Call this from the OpMode thread to obtain the latest analysis
      */
-    public Vision.DuckDeterminationPipeline.DuckPosition getAnalysis()
+    public DuckDeterminationPipeline.DuckPosition getAnalysis()
     {
         return position;
     }
